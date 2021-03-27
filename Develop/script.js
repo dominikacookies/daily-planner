@@ -22,6 +22,8 @@ function identifyCurrentTime () {
 
 function colourCodeTimeBlocks () {
   console.log("hello")
+  // turn html elements into an array
+  //var blockTime = $("#blockTime").attr("data-time");
   // if time block attr is less than current time add class .past
 
   // else if time block attr is equal to current time then add class current
