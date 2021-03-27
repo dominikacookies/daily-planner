@@ -22,6 +22,11 @@ function identifyCurrentTime () {
 
 function colourCodeTimeBlocks () {
   console.log("hello")
+  // if time block attr is less than current time add class .past
+
+  // else if time block attr is equal to current time then add class current
+
+  // else add class future
 };
 
 $("document").ready(populatePageInformation);
