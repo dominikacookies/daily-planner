@@ -1,5 +1,6 @@
 today = moment();
 currentTime = identifyCurrentTime();
+let eventInfoArray = [];
 
 function identifyCurrentTime () {
   currentHour = today.format("HH");
@@ -49,20 +50,24 @@ function populatePageInformation () {
 };
 
 function saveEvent (event) {
-  let blockID = $(event.target).siblings(".hour").attr("data-time");
-  let eventInfo = $(event.target).siblings("textarea").val();
-  // let timeID = event.target;
-  console.log(blockID);
-  console.log(eventInfo);
+  let timeBlockID = $(event.target).siblings(".hour").attr("data-time");
+  let eventInfoText = $(event.target).siblings("textarea").val();
 
+  if (eventInfoText == " ") {
+    alert("Please event information before saving")
+  } else {
+    let eventInfoObject = {
+    timeBlockID,
+    eventInfoText,
+    }
 
-  //let eventInfo = //text in sibling object
+    eventInfoArray.push(eventInfoObject);
 
-  //let eventInformationObject {}
-
-  //stringify object and store in local storage
+    let eventInfoString = JSON.stringify(eventInfoArray);
+    localStorage.setItem("eventInformation", eventInfoString);
 
   // destroy object text
+  }
 
 }
 
