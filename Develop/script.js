@@ -12,7 +12,7 @@ function updateCurrentTimeTimer () {
 };
 
 //colour code time blocks for past/present/future events
-function colourCodeTimeBlocks () {
+function colourCodeTextArea () {
   $(".row").each(function() {
     let blockTime = $(this).children(".hour").attr("data-time");
     console.log(blockTime);
@@ -24,15 +24,47 @@ function colourCodeTimeBlocks () {
       $(this).children("textarea").addClass("past");
     } else {
       $(this).children("textarea").addClass("future");
-    };
+    }
   });
 };
+
+//add saved events to text areas
+// function populateSavedEvents () {
+  //console.log(populate)
+  //check if events exist in local storage
+
+  //parse it into an array
+
+  // for each item in the array 
+    // match the id against data-time
+    //populate the textaread of that data-time row with event info from that array item
+//}
 
 function populatePageInformation () {
   // Populate day information in the header
   $("#currentDay").text(today.format("Do [of] MMM YYYY"));
   updateCurrentTimeTimer();
-  colourCodeTimeBlocks();
+  colourCodeTextArea();
+  //populateSavedEvents();
 };
 
+function saveEvent (event) {
+  let blockID = $(event.target).siblings(".hour").attr("data-time");
+  let eventInfo = $(event.target).siblings("textarea").val();
+  // let timeID = event.target;
+  console.log(blockID);
+  console.log(eventInfo);
+
+
+  //let eventInfo = //text in sibling object
+
+  //let eventInformationObject {}
+
+  //stringify object and store in local storage
+
+  // destroy object text
+
+}
+
 $("document").ready(populatePageInformation);
+$(".container .row .saveBtn").click(saveEvent);
