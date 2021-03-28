@@ -1,6 +1,7 @@
 today = moment();
 currentTime = identifyCurrentTime();
 let eventInfoArray = [];
+let savedEventInfoArray = [];
 
 function identifyCurrentTime () {
   currentHour = today.format("HH");
@@ -10,15 +11,14 @@ function identifyCurrentTime () {
 //every minute trigger check what the current time is
 function updateCurrentTimeTimer () {
   setInterval(identifyCurrentTime, 60000);
+  colourCodeTextArea ();
 };
 
 //colour code time blocks for past/present/future events
 function colourCodeTextArea () {
   $(".row").each(function() {
     let blockTime = $(this).children(".hour").attr("data-time");
-    console.log(blockTime);
-    console.log(currentTime);
-  
+
     if (blockTime == currentTime) {
       $(this).children("textarea").addClass("present");
     } else if (blockTime < currentTime) {
@@ -30,23 +30,31 @@ function colourCodeTextArea () {
 };
 
 //add saved events to text areas
-// function populateSavedEvents () {
-  //console.log(populate)
-  //check if events exist in local storage
-
-  //parse it into an array
-
-  // for each item in the array 
-    // match the id against data-time
-    //populate the textaread of that data-time row with event info from that array item
-//}
+function populateInfoForSavedEvents () {
+  console.log("populate")
+  if (localStorage.getItem("eventInformation") !== null) {
+    savedEventInfoArray = JSON.parse(localStorage.getItem('eventInformation'));
+    console.log(savedEventInfoArray)
+    $.each(savedEventInfoArray, function() {
+      timeBlock = this.timeBlockID;
+      eventInfo = this.eventInfoText;
+      //timeBlockElement = $("document").find(`[data-time='timeBlock']`);
+      timeBlockElement = $('.row [data-time=' + timeBlock + ']') ;
+      $(timeBlockElement).children("textarea").text(eventInfo);
+ 
+      console.log(timeBlockElement)
+  });
+  } else {
+    return;
+  };
+}
 
 function populatePageInformation () {
   // Populate day information in the header
   $("#currentDay").text(today.format("Do [of] MMM YYYY"));
   updateCurrentTimeTimer();
   colourCodeTextArea();
-  //populateSavedEvents();
+  populateInfoForSavedEvents();
 };
 
 function saveEvent (event) {
@@ -67,8 +75,8 @@ function saveEvent (event) {
     localStorage.setItem("eventInformation", eventInfoString);
 
   // destroy object text
+  $(event.target).siblings("textarea").val(" ");
   }
-
 }
 
 $("document").ready(populatePageInformation);
