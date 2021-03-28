@@ -39,15 +39,15 @@ function populateInfoForSavedEvents () {
       timeBlock = this.timeBlockID;
       eventInfo = this.eventInfoText;
       //timeBlockElement = $("document").find(`[data-time='timeBlock']`);
-      timeBlockElement = $('.row [data-time=' + timeBlock + ']') ;
-      $(timeBlockElement).children("textarea").text(eventInfo);
- 
+      timeBlockElement = $('.row [data-time=' + timeBlock + ']');
+      //this bit doesn't work
+      $(timeBlockElement).children("textarea").text(eventInfo); 
       console.log(timeBlockElement)
   });
   } else {
     return;
   };
-}
+};
 
 function populatePageInformation () {
   // Populate day information in the header
