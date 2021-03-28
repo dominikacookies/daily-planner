@@ -13,7 +13,7 @@ function updateCurrentTimeTimer () {
 
 //colour code time blocks for past/present/future events
 function colourCodeTimeBlocks () {
-  console.log("hello")
+  console.log("hi")
   // turn html elements into an array
   //const blockTime = $("#blockTime").attr("data-time");
   // if time block attr is less than current time add class .past
@@ -27,7 +27,9 @@ function populatePageInformation () {
   // Populate day information in the header
   $("#currentDay").text(today.format("Do [of] MMM YYYY"));
   updateCurrentTimeTimer();
-  //$('.row').each(colourCodeTimeBlocks());
+  $(".row").each(function() {
+    colourCodeTimeBlocks ()
+  });
 };
 
 $("document").ready(populatePageInformation);
