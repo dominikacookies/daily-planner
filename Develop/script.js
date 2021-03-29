@@ -38,6 +38,8 @@ function populateInfoForSavedEvents () {
     $.each(savedEventInfoArray, function() {
       timeBlock = this.timeBlockID;
       eventInfo = this.eventInfoText;
+      console.log (timeBlock);
+      console.log = (eventInfo);
       timeBlockElement = $('.hour [data-time=' + timeBlock + ']');
       console.log(timeBlockElement);
       //the below line doesn't work
