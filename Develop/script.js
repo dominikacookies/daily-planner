@@ -38,11 +38,10 @@ function populateInfoForSavedEvents () {
     $.each(savedEventInfoArray, function() {
       timeBlock = this.timeBlockID;
       eventInfo = this.eventInfoText;
-      //timeBlockElement = $("document").find(`[data-time='timeBlock']`);
-      timeBlockElement = $('.row [data-time=' + timeBlock + ']');
-      //this bit doesn't work
-      $(timeBlockElement).children("textarea").text(eventInfo); 
-      console.log(timeBlockElement)
+      timeBlockElement = $('.hour [data-time=' + timeBlock + ']');
+      console.log(timeBlockElement);
+      //the below line doesn't work
+      $(timeBlockElement).siblings("textarea").text(eventInfo); 
   });
   } else {
     return;
