@@ -41,7 +41,7 @@ function populateInfoForSavedEvents () {
       timeBlockElement = $('.hour [data-time=' + timeBlock + ']');
       console.log(timeBlockElement);
       //the below line doesn't work
-      $(timeBlockElement).siblings("textarea").text(eventInfo); 
+      $(timeBlockElement).siblings("textarea").val(eventInfo); 
   });
   } else {
     return;
