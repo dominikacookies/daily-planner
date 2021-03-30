@@ -31,18 +31,14 @@ function colourCodeTextArea () {
 
 //add saved events to text areas
 function populateInfoForSavedEvents () {
-  console.log("populate")
   if (localStorage.getItem("eventInformation") !== null) {
     savedEventInfoArray = JSON.parse(localStorage.getItem('eventInformation'));
     console.log(savedEventInfoArray)
     $.each(savedEventInfoArray, function() {
       timeBlock = this.timeBlockID;
       eventInfo = this.eventInfoText;
-      console.log(timeBlock, eventInfo);
-      timeBlockElement = $('.hour [data-time=' + timeBlock + ']');
-      console.log(timeBlockElement);
-      //the below line doesn't work
-      $(timeBlockElement).siblings("textarea").val(eventInfo); 
+      timeBlockElement = $(`.hour[data-time="${timeBlock}"]`);
+      timeBlockElement.siblings("textarea").prepend(eventInfo); 
   });
   } else {
     return;
@@ -76,6 +72,8 @@ function saveEvent (event) {
 
   // destroy object text
   $(event.target).siblings("textarea").val(" ");
+  //populate event info onto page
+  
   }
 }
 
