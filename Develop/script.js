@@ -33,12 +33,12 @@ function colourCodeTextArea () {
 function populateInfoForSavedEvents () {
   if (localStorage.getItem("eventInformation") !== null) {
     savedEventInfoArray = JSON.parse(localStorage.getItem('eventInformation'));
-    console.log(savedEventInfoArray)
     $.each(savedEventInfoArray, function() {
       timeBlock = this.timeBlockID;
       eventInfo = this.eventInfoText;
-      timeBlockElement = $(`.hour[data-time="${timeBlock}"]`);
-      timeBlockElement.siblings("textarea").prepend(eventInfo); 
+      timeBlockElement = $(`.hour[data-time="${timeBlock}"]`); // this is a jquery function
+      timeBlockElement.siblings("textarea").val(eventInfo);
+      //preprend 
   });
   } else {
     return;
@@ -54,12 +54,17 @@ function populatePageInformation () {
 };
 
 function saveEvent (event) {
-  let timeBlockID = $(event.target).siblings(".hour").attr("data-time");
-  let eventInfoText = $(event.target).siblings("textarea").val();
+  let timeBlockID = $(event.currentTarget).siblings(".hour").attr("data-time");
+  let eventInfoText = $(event.currentTarget).siblings("textarea").val();
 
+  // do we need this? what if someone wants to clear the text?
   if (eventInfoText == " ") {
-    alert("Please event information before saving")
-  } else {
+    alert("Please enter event information before saving");
+  } else if (localStorage.getItem("eventInformation") !== null) {
+    eventInfoArray = JSON.parse(localStorage.getItem('eventInformation'));
+
+    //identify same timeblock and destroy it
+
     let eventInfoObject = {
     timeBlockID,
     eventInfoText,
@@ -71,11 +76,27 @@ function saveEvent (event) {
     localStorage.setItem("eventInformation", eventInfoString);
 
   // destroy object text
+  $(event.currentTarget).siblings("textarea").val(" ");
+  //populate event info onto page
+  setTimeout(() => {populateInfoForSavedEvents()}, 1500);
+  } else {
+    let eventInfoObject = {
+    timeBlockID,
+    eventInfoText,
+    }
+    eventInfoArray.push(eventInfoObject);
+    
+    let eventInfoString = JSON.stringify(eventInfoArray);
+    localStorage.setItem("eventInformation", eventInfoString);
+
+  // destroy object text
   $(event.target).siblings("textarea").val(" ");
   //populate event info onto page
-  
+  setTimeout(() => {populateInfoForSavedEvents()}, 1500);
   }
 }
 
 $("document").ready(populatePageInformation);
-$(".container .row .saveBtn").click(saveEvent);
+$(".container").on( "click", "button", saveEvent);
+//$(".container .row .saveBtn").on( "click", "button", saveEvent);
+//$(".container .row .saveBtn").click(saveEvent);
