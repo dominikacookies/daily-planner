@@ -53,6 +53,7 @@ function populateCurrentDayInformation () {
   populateInfoForSavedEvents();
 };
 
+//save the event info input into local storage
 function saveEvent (event) {
   let timeBlockID = $(event.currentTarget).siblings(".hour").attr("data-time");
   let eventInfoText = $(event.currentTarget).siblings("textarea").val();
