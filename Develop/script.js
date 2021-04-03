@@ -3,12 +3,13 @@ currentTime = identifyCurrentTime();
 let eventInfoArray = [];
 let savedEventInfoArray = [];
 
+// identify current time
 function identifyCurrentTime () {
   currentHour = today.format("HH");
   return currentHour;
 };
 
-//every minute trigger check what the current time is
+//every minute check what the current time is
 function updateCurrentTimeTimer () {
   setInterval(identifyCurrentTime, 60000);
   colourCodeTextArea ();
@@ -29,24 +30,23 @@ function colourCodeTextArea () {
   });
 };
 
-//add saved events to text areas
+//add saved event information to relevant text areas
 function populateInfoForSavedEvents () {
   if (localStorage.getItem("eventInformation") !== null) {
     savedEventInfoArray = JSON.parse(localStorage.getItem('eventInformation'));
     $.each(savedEventInfoArray, function() {
       timeBlock = this.timeBlockID;
       eventInfo = this.eventInfoText;
-      timeBlockElement = $(`.hour[data-time="${timeBlock}"]`); // this is a jquery function
+      timeBlockElement = $(`.hour[data-time="${timeBlock}"]`);
       timeBlockElement.siblings("textarea").val(eventInfo);
-      //preprend 
-  });
+    });
   } else {
     return;
   };
 };
 
-function populatePageInformation () {
-  // Populate day information in the header
+//populate day information in the header
+function populateCurrentDayInformation () {
   $("#currentDay").text(today.format("Do [of] MMM YYYY"));
   updateCurrentTimeTimer();
   colourCodeTextArea();
@@ -57,46 +57,48 @@ function saveEvent (event) {
   let timeBlockID = $(event.currentTarget).siblings(".hour").attr("data-time");
   let eventInfoText = $(event.currentTarget).siblings("textarea").val();
 
-  // do we need this? what if someone wants to clear the text?
-  if (eventInfoText == " ") {
-    alert("Please enter event information before saving");
-  } else if (localStorage.getItem("eventInformation") !== null) {
+  if (localStorage.getItem("eventInformation") !== null) {
     eventInfoArray = JSON.parse(localStorage.getItem('eventInformation'));
 
-    //identify same timeblock and destroy it
+    // remove object with event info previously saved for that time block
+    function removePreviouslySavedEventInfo (item) {
+      if (item.timeBlockID !== timeBlockID) {
+        return true
+      }
+      return false;
+    }
+    let cleansedEventInfoArray = savedEventInfoArray.filter(removePreviouslySavedEventInfo);
 
-    let eventInfoObject = {
+    let newEventInfoObject = {
     timeBlockID,
     eventInfoText,
     }
 
-    eventInfoArray.push(eventInfoObject);
+    cleansedEventInfoArray.push(newEventInfoObject);
+    let newEventInfoString = JSON.stringify(cleansedEventInfoArray);
+    localStorage.setItem("eventInformation", newEventInfoString);
 
-    let eventInfoString = JSON.stringify(eventInfoArray);
-    localStorage.setItem("eventInformation", eventInfoString);
+    // destroy object text
+    $(event.currentTarget).siblings("textarea").val(" ");
+    //populate event info back onto page after 1.5secs
+    setTimeout(() => {populateInfoForSavedEvents()}, 1500);
 
-  // destroy object text
-  $(event.currentTarget).siblings("textarea").val(" ");
-  //populate event info onto page
-  setTimeout(() => {populateInfoForSavedEvents()}, 1500);
   } else {
     let eventInfoObject = {
     timeBlockID,
     eventInfoText,
     }
+
     eventInfoArray.push(eventInfoObject);
-    
     let eventInfoString = JSON.stringify(eventInfoArray);
     localStorage.setItem("eventInformation", eventInfoString);
 
-  // destroy object text
-  $(event.target).siblings("textarea").val(" ");
-  //populate event info onto page
-  setTimeout(() => {populateInfoForSavedEvents()}, 1500);
+    // destroy object text
+    $(event.target).siblings("textarea").val(" ");
+    //populate event info back onto page after 1.5secs
+    setTimeout(() => {populateInfoForSavedEvents()}, 1500);
   }
 }
 
-$("document").ready(populatePageInformation);
+$("document").ready(populateCurrentDayInformation);
 $(".container").on( "click", "button", saveEvent);
-//$(".container .row .saveBtn").on( "click", "button", saveEvent);
-//$(".container .row .saveBtn").click(saveEvent);
