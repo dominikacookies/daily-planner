@@ -6,29 +6,26 @@ You can view this project on GitHub pages by clicking [here](https://dominikacoo
 
 ## Description
 
-This project is a daily planner which allows the user to plan their day by saving event information in the relevant time block. The planner also makes it easy for the user to see which events have passed and which are upcoming based on the colour coding of the relevant time blocks.
+This project is a daily planner which allows the user to plan their day by saving event information in the relevant time block. The planner also makes it easy for the user to see which events have passed and which are upcoming based the colour of the time block.
 
 ### Key functionalities
-- presents user with time blocks for office hours to store events information in and assist in day planning
-- accepts event information from the user and displays it in the relevant time block 
-- marks the relevant time blocks in different colours depending on whether the time is present, passed, or future
-- displays the current day to the user 
+- displays the current day to the user
+- presents user with time blocks for office hours
+- time blocks accept event information from the user and display it following saving of the event
+- time blocks inherit a different colour depending on whether the time is present, passed, or future 
 - allows user to update their event information and destroys old information
 
 
 ## Screenshots of App
 
-### Start Screen
-![image](.assets/../assets/screenshots/startscreen.png) 
+### Load screen
+![image](./assets/screenshots/onLoadScreen.png) 
 
-### Question Page
-![image](.assets/../assets/screenshots/question.png)
+### User inputting event information
+![image](./assets/screenshots/userInputsEventInfo.png)
 
-### Score Submission
-![image](.assets/../assets/screenshots/gameoverscreen.png)
-
-### Highscores Page
-![image](.assets/../assets/screenshots/highscorestable.png)
+### Saved event information is loaded onto the screen
+![image](./assets/screenshots/eventINfoIsSavedInTimeBlock.png)
 
 ## Video of App
-You can view the app in action [here](.assets/../assets/screenshots/applicationworkingvideo.mov).
+You can view the app in action [here](./assets/screenshots/appInUse.mov).
