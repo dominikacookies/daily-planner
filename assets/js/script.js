@@ -3,6 +3,14 @@ currentTime = identifyCurrentTime();
 let eventInfoArray = [];
 let savedEventInfoArray = [];
 
+//populate day information in the header
+function populateCurrentDayInformation () {
+  $("#currentDay").text(today.format("Do [of] MMM YYYY"));
+  updateCurrentTimeTimer();
+  colourCodeTextArea();
+  populateInfoForSavedEvents();
+};
+
 // identify current time
 function identifyCurrentTime () {
   currentHour = today.format("HH");
@@ -43,14 +51,6 @@ function populateInfoForSavedEvents () {
   } else {
     return;
   };
-};
-
-//populate day information in the header
-function populateCurrentDayInformation () {
-  $("#currentDay").text(today.format("Do [of] MMM YYYY"));
-  updateCurrentTimeTimer();
-  colourCodeTextArea();
-  populateInfoForSavedEvents();
 };
 
 //save the event info input into local storage
